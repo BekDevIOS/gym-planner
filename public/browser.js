@@ -1,13 +1,19 @@
 
 console.log("Frontend qismi");
 
-let input1 = document.getElementById("pathot-item");
-let input2 = document.getElementById("soni-item");
-document.getElementById("create-form").addEventListener("submit", function(e){
+const form_workout = document.getElementById('form_workout');
+form_workout.addEventListener('submit', function(e){
     e.preventDefault();
-    axios.post("/qoshish", {pathot: input1.value, son: input2.value})
-    .then(response => {
-        console.log(response.data)
+    const workoutPlan = document.getElementById('input_workout');
+    const workoutDay = document.getElementById('select_workout_day');
+    const workoutType = document.getElementById('select_workout_type');
+    axios.post('/create-item', {
+        workoutPlan: workoutPlan.value,
+        workoutDay: workoutDay.value,
+        workoutType: workoutType.value
     })
-    
-});
+    .then(response => {
+        workoutPlan.value = "";
+        workoutPlan.focus();
+    })
+})

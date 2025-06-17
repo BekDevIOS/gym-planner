@@ -1,53 +1,46 @@
-console.log("web app.jsni boshlemiz");
-const express = require("express")
+const express = require('express');
 const app = express();
 
 
+// MongoDB connect
+const db = require('./server');
+const mongodb = require('mongodb');
 
-//mongo db caqriw
-const db = require("./server").db()
-const mongodb = require("mongodb")
-
-
-//kiriw qism
+// 1: Kirish code
 app.use(express.static('public'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({extended: true}));
 
 
 
-
-
-//session qism
-//views qism
+// 3: Views code
 app.set('views', 'views');
 app.set('view engine', 'ejs');
 
 
+// 4: Routing code
 
-
-
-//routing qism
 // Home page
-app.get("/", (req, res) => {
+app.get('/', (req, res) => {
     res.render('gym');
-})
+});
 
-// qishish
-app.post("/qoshish", (req, res) => {
-    console.log('NOur', req.body);
-    const input1 = req.body.pathot;
-    const input2 = req.body.son;
-    db.collection("plans").insertOne({
-        pathot: input1,
-        son: input2
+// Create item
+app.post('/create-item', (req, res) => {
+    console.log(req.body);
+    const workout = req.body
+    db.collection('workout').insertOne({
+        workoutPlan: workout.workoutPlan,
+        workoutDay: workout.workoutDay,
+        workoutType: workout.workoutType
     }, (err, data) => {
-        res.send("saqlandi")
+        if (err) {
+          console.error("Insert error:", err);
+          return res.status(500).json({ error: "Failed to create item." });
+          }
+        res.json(data.ops[0]);
     })
-})
-
-
-
+});
 
 
 

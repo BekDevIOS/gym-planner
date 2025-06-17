@@ -1,52 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gym Workout Helper</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/main.css" rel="stylesheet">
 </head>
 <body>
-     <form id="create-form" action="/create-item" method="POST">
-        <div class="container mt-5">
-  <div style="margin-bottom:10px;" class="bg-dark text-white p-4 rounded-4 d-flex align-items-center justify-content-between gap-3">
-        <!-- Left: Icon + Title -->
-    <div class="d-flex align-items-center gap-3" style="margin:50px,auto;">
-    <span>img</span>
-      <h4 class="m-0">Yelkaga ishlash</h4>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2>🏋️ Gym Dashboard</h2>
+      <a href="#" class="btn btn-outline-danger">Logout</a>
     </div>
-    <!-- Right: Inputs + Button -->
-    <div class="d-flex align-items-center gap-2">
-      <input type="text" id = "pathot-item" class="form-control form-control-sm" placeholder="pathot" style="width: 70px;" />
-      <span>X</span>
-      <input type="text" id = "soni-item" class="form-control form-control-sm" placeholder="soni" style="width: 70px;" />
-      <button class="submit-items btn btn-outline-light btn-sm" style="width: 100px; margin-left: 20px">Qo'shish</button>
-    </div>
-  </div>
-</div>
-     </form>
 
-<div class="container mt-5">
-    <ul style="list-style: none;">
-    <li>
-        <div style="margin-bottom:10px;" class="bg-dark text-white p-4 rounded-4 d-flex align-items-center justify-content-between gap-3">
-        <!-- Left: Icon + Title -->
-    <div class="d-flex align-items-center gap-3" style="margin:50px,auto;">
-    <span>img</span>
-      <h4 class="m-0">Yelkaga ishlash</h4>
+    <!-- Weekly Plan -->
+    <div class="dashboard-card mb-4">
+      <h4 class="section-title">📅 Weekly Workout Plan</h4>
+      <div class="row g-3">
+        <div class="col-md-4">
+          <div class="workout-card">
+            <strong>Monday:</strong> <span>Triceps</span><br/><span>anjumanya,gantel va boshqa</span><br>
+            <input type="checkbox" class="checkbox-large" checked /><span class="text-muted">Completed</span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="workout-card">
+            <strong>Tuesday:</strong> Legs<br/>
+            <input type="checkbox" class="checkbox-large" checked /><span class="text-muted">Not done</span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="workout-card">
+            <strong>Wednesday:</strong> Rest day<br/>
+            <span class="text-muted">😴</span>
+          </div>
+        </div>
+      </div>
     </div>
-    <!-- Right: Inputs + Button -->
-    <div class="d-flex align-items-center gap-2">
-      <input type="text" id = "pathot-item" class="form-control form-control-sm" placeholder="pathot" style="width: 70px;" />
-      <span>X</span>
-      <input type="text" id = "soni-item" class="form-control form-control-sm" placeholder="soni" style="width: 70px;" />
-      <button class="submit-items btn btn-outline-light btn-sm" style="width: 100px; margin-left: 20px">Qo'shish</button>
+
+    <!-- Add Workout -->
+    <div class="dashboard-card mb-4">
+      <h4 class="section-title">➕ Add Workout</h4>
+      <form class="row g-3" id="form_workout" method="POST" action="/create-item">
+        <div class="col-md-4">
+          <input type="text" name="workoutPlan" id="input_workout" class="form-control" placeholder="Workout name" />
+        </div>
+        <div class="col-md-3">
+          <select id="select_workout_day" class="form-select">
+            <option selected>Day of Week</option>
+            <option>Monday</option>
+            <option>Tuesday</option>
+            <option>Wednesday</option>
+            <option>Thursday</option>
+            <option>Friday</option>
+            <option>Saturday</option>
+             <option>Sunday</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <select id="select_workout_type" class="form-select">
+            <option selected>Muscle Group</option>
+            <option>Chest</option>
+            <option>Back</option>
+            <option>Legs</option>
+            <option>Shoulders</option>
+            <option>Biceps</option>
+            <option>Triceps</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <button class="button_workout btn btn-success w-100">Add</button>
+        </div>
+      </form>
     </div>
+
+    <!-- Progress Chart Placeholder -->
+    <div class="dashboard-card text-white">
+    <h4 class="section-title">📚 Workout History</h4>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item bg-dark d-flex justify-content-between align-items-center">
+        <div class="text-white">
+            <strong>✅ Monday</strong><br/>
+            Chest & Triceps 45 mins dsf dsfs sdfsd 
+        </div>
+        <small class="text-muted">June 17</small>
+        </li>
+        <li class="list-group-item bg-dark d-flex justify-content-between align-items-center">
+        <div>
+            <strong>✅ Tuesday</strong><br/>
+            Legs – 50 mins
+        </div>
+        <small class="text-muted">June 18</small>
+        </li>
+        <li class="list-group-item bg-dark d-flex justify-content-between align-items-center">
+        <div>
+            <strong>❌ Wednesday</strong><br/>
+            Skipped
+        </div>
+        <small class="text-muted">June 19</small>
+        </li>
+    </ul>
+    </div>
+
   </div>
-    </li>
-</ul>
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.9.0/axios.min.js"></script>
-<script src="/browser.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.9.0/axios.min.js"></script>
+  <script src="/browser.js"></script>
 </body>
 </html>
