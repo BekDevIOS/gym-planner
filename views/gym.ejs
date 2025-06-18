@@ -8,101 +8,59 @@
   <link href="/main.css" rel="stylesheet">
 </head>
 <body>
-  <div class="container py-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h2>🏋️ Gym Dashboard</h2>
-      <a href="#" class="btn btn-outline-danger">Logout</a>
-    </div>
-
-    <!-- Weekly Plan -->
-    <div class="dashboard-card mb-4">
-      <h4 class="section-title">📅 Weekly Workout Plan</h4>
-      <div class="row g-3">
-        <div class="col-md-4">
-          <div class="workout-card">
-            <strong>Monday:</strong> <span>Triceps</span><br/><span>anjumanya,gantel va boshqa</span><br>
-            <input type="checkbox" class="checkbox-large" checked /><span class="text-muted">Completed</span>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="workout-card">
-            <strong>Tuesday:</strong> Legs<br/>
-            <input type="checkbox" class="checkbox-large" checked /><span class="text-muted">Not done</span>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="workout-card">
-            <strong>Wednesday:</strong> Rest day<br/>
-            <span class="text-muted">😴</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Add Workout -->
-    <div class="dashboard-card mb-4">
-      <h4 class="section-title">➕ Add Workout</h4>
-      <form class="row g-3" id="form_workout" method="POST" action="/create-item">
-        <div class="col-md-4">
-          <input type="text" name="workoutPlan" id="input_workout" class="form-control" placeholder="Workout name" />
-        </div>
+   <div class="container py-5">
+    <h2 class="mb-4">🏋️‍♂️ Today's Workout Planner</h2>
+    <div class="planner-card">
+      <form id="workout-form" class="row g-3" method="POST" action="/create-item">
         <div class="col-md-3">
-          <select id="select_workout_day" class="form-select">
-            <option selected>Day of Week</option>
-            <option>Monday</option>
-            <option>Tuesday</option>
-            <option>Wednesday</option>
-            <option>Thursday</option>
-            <option>Friday</option>
-            <option>Saturday</option>
-             <option>Sunday</option>
-          </select>
-        </div>
-        <div class="col-md-3">
-          <select id="select_workout_type" class="form-select">
-            <option selected>Muscle Group</option>
+          <label for="muscleGroup" class="form-label">Muscle Group</label>
+          <select class="form-select" id="muscleGroup">
             <option>Chest</option>
             <option>Back</option>
             <option>Legs</option>
             <option>Shoulders</option>
-            <option>Biceps</option>
-            <option>Triceps</option>
+            <option>Arms</option>
           </select>
         </div>
+        <div class="col-md-3">
+          <label for="trainingType" class="form-label">Training Type</label>
+            <input type="text" class="form-select form-control" id="trainingType" required>
+        </div>
         <div class="col-md-2">
-          <button class="button_workout btn btn-success w-100">Add</button>
+          <label for="sets" class="form-label">Sets</label>
+          <input type="number" id="sets" class="form-control" min="1" max="10" required>
+        </div>
+        <div class="col-md-2">
+          <label for="reps" class="form-label">Reps</label>
+          <input type="number" id="reps" class="form-control" min="1" max="50" required>
+        </div>
+        <div class="col-md-2 d-flex align-items-end">
+          <button type="submit" class="btn btn-success w-100">Add</button>
         </div>
       </form>
     </div>
 
-    <!-- Progress Chart Placeholder -->
-    <div class="dashboard-card text-white">
-    <h4 class="section-title">📚 Workout History</h4>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item bg-dark d-flex justify-content-between align-items-center">
-        <div class="text-white">
-            <strong>✅ Monday</strong><br/>
-            Chest & Triceps 45 mins dsf dsfs sdfsd 
+     <div class="planner-card">
+      <h5>📋 Today's Plan</h5>
+      <div id="plan-list">
+        <% items.map(function(item){ %>
+        <div class="workout-card <%= item.completed ? 'completed' : '' %>">
+          <div class="info">
+            <div class="title"><%= item.muscleGroup %> – <%= item.trainingType %></div>
+            <div class="details">Sets: <%= item.workoutSets %>, Reps: <%= item.workoutReps %></div>
+          </div>
+          <div class="actions">
+            <input type="checkbox" class="complete-checkbox" data-id="<%= item._id %>" <%= item.completed ? 'checked' : '' %>>
+            <button data-id="<%= item._id %>" class="delete-item btn btn-sm btn-outline-danger">Delete</button>
+          </div>
         </div>
-        <small class="text-muted">June 17</small>
-        </li>
-        <li class="list-group-item bg-dark d-flex justify-content-between align-items-center">
-        <div>
-            <strong>✅ Tuesday</strong><br/>
-            Legs – 50 mins
-        </div>
-        <small class="text-muted">June 18</small>
-        </li>
-        <li class="list-group-item bg-dark d-flex justify-content-between align-items-center">
-        <div>
-            <strong>❌ Wednesday</strong><br/>
-            Skipped
-        </div>
-        <small class="text-muted">June 19</small>
-        </li>
-    </ul>
-    </div>
+        <% }) %>
+      </div>
+      <div class="text-center mt-4">
+        <button id="clear-all-btn" class="btn btn-danger btn-sm">🗑️ Clear All</button>
+      </div>
 
+    </div>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.9.0/axios.min.js"></script>
   <script src="/browser.js"></script>
